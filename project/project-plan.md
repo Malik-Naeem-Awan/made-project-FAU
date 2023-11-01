@@ -20,7 +20,8 @@ It has been seen in recent years that the rate of increase in employees from abr
 
 ### Datasource1: European Data Portal
 * Metadata URL: https://data.europa.eu/data/datasets/4308-employees-from-abroad-resident-non-resident-demographic-variables?locale=en
-* Data URL: [https://raw.githubusercontent.com/od-ms/radverkehr-zaehlstellen/main/100035541/2019-01.csv](https://opendata.cbs.nl/statline/#/CBS/en/dataset/84060ENG/table?dl=99499)
+* Data URL: [https://opendata.cbs.nl/statline/#/CBS/en/dataset/84060ENG/table?dl=99499]
+* (https://opendata.cbs.nl/statline/#/CBS/en/dataset/84060ENG/table?dl=99499)
 * Data Type: CSV
 Employees from abroad;resident/non-resident,demographic variables,2010-2017
 
@@ -28,7 +29,7 @@ Employees from abroad;resident/non-resident,demographic variables,2010-2017
 * Metadata URL: https://data.europa.eu/data/datasets/15702-research-and-development-personnel-expenditure-company-size-branch?locale=en
 * Data URL: https://opendata.cbs.nl/statline/#/CBS/en/dataset/84985ENG/table?dl=9949A
 * Data Type: CSV
-Netherland's Research and development; personnel, expenditure, company size, branch.
+Netherland's Research and development; personnel, expenditure, company size, branch, 2013-2017.
 
 
 ## Work Packages
