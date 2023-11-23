@@ -3,8 +3,8 @@
 # Execute the data pipeline
 python3 /project/pipeline.py
 
-employee_data_file="./main/data/employees_data.sqlite"
-RD_Expenditure_data_file="./main/data/R&D_Expenditure.sqlite"
+employee_data_file="./data/employees_data.sqlite"
+RD_Expenditure_data_file="./data/R&D_Expenditure.sqlite"
 
 # Check if the Employee output file exists
 if [ -f "$employee_data_file" ]; then
