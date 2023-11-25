@@ -24,25 +24,14 @@ def fetch_data_with_retry(table, filters, max_attempts=5):
 def get_datasource_1() -> pd.DataFrame:
     print(" - Loading Datasource 1")
 
-    EmployeeWithWithoutRegistration = "EmployeeWithWithoutRegistration eq 'T001391' and "
-    EmployeeCharacteristics = "EmployeeCharacteristics eq 'T001097' and "
-    SectorBranchesSIC2008 = "SectorBranchesSIC2008 eq 'T001081' and "
-    JobCharacteristics = "JobCharacteristics eq 'T001025' and "
-    MigrationBackgroundNationality = "MigrationBackgroundNationality eq 'T001040' and "
-    Periods = "(Periods eq '2013JJ00' or Periods eq '2014JJ00' or "
-    Periods_2015_16 = "Periods eq '2015JJ00' or Periods eq '2016JJ00' or "
-    Periods_2017 = "Periods eq '2017JJ00')"
-
-
     filter_condition = (
-        EmployeeWithWithoutRegistration+
-        EmployeeCharacteristics+
-        SectorBranchesSIC2008+
-        JobCharacteristics+
-        MigrationBackgroundNationality+
-        Periods+
-        Periods_2015_16+
-        Periods_2017
+        "EmployeeWithWithoutRegistration eq 'T001391' and "
+        "EmployeeCharacteristics eq 'T001097' and "
+        "SectorBranchesSIC2008 eq 'T001081' and "
+        "JobCharacteristics eq 'T001025' and "
+        "MigrationBackgroundNationality eq 'T001040' and "
+        "(Periods eq '2013JJ00' or Periods eq '2014JJ00' or Periods eq '2015JJ00' or Periods eq '2016JJ00' or "
+        "Periods eq '2017JJ00')"
     )
 
     df = fetch_data_with_retry('84060ENG', filters=filter_condition)
@@ -61,19 +50,11 @@ def get_datasource_1() -> pd.DataFrame:
 def get_datasource_2() -> pd.DataFrame:
     print(" - Loading Datasource 2")
 
-    SectorBranchesSIC2008 = "SectorBranchesSIC2008 eq 'T001081' and "
-    CompanySize = "CompanySize eq 'T001098' and "
-    Periods_201314 = "(Periods eq '2013JJ00' or Periods eq '2014JJ00' "
-    Periods_201516 = "or Periods eq '2015JJ00' or Periods eq '2016JJ00' or "
-    Periods_2017 = "Periods eq '2017JJ00')"
-
-
     filter_condition = (
-        SectorBranchesSIC2008+
-        CompanySize+
-        Periods_201314+
-        Periods_201516+
-        Periods_2017
+        "SectorBranchesSIC2008 eq 'T001081' and "
+        "CompanySize eq 'T001098' and "
+        "(Periods eq '2013JJ00' or Periods eq '2014JJ00' or Periods eq '2015JJ00' or Periods eq '2016JJ00' or "
+        "Periods eq '2017JJ00')"
     )
 
     df = fetch_data_with_retry('84985ENG', filters=filter_condition)
