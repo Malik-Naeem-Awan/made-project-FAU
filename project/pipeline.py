@@ -52,20 +52,20 @@ def get_datasource_1() -> pd.DataFrame:
         "Periods eq '2017JJ00')"
     )
 
-    df1 = fetch_data_with_retry('84060ENG', filters=filter_condition)
+    df = fetch_data_with_retry('84060ENG', filters=filter_condition)
 
-    if df1.empty:
+    if df.empty:
         print("Failed to fetch data after multiple attempts.")
     else:
-        df1 = df1.drop(columns=['ID',
+        df = df.drop(columns=['ID',
                                 'SectorBranchesSIC2008',
                                 'JobCharacteristics',
                                 'EmployeeWithWithoutRegistration',
                                 'MigrationBackgroundNationality',
                                 'EmployeeCharacteristics'])
-        df1.columns = ['Year', 'Number of employees from abroad']
-        df1['Number of employees from abroad'] = df1['Number of employees from abroad'] * 1000
-    return df1
+        df.columns = ['Year', 'Number of employees from abroad']
+        df['Number of employees from abroad'] = df['Number of employees from abroad'] * 1000
+    return df
 
 
 def get_datasource_2() -> pd.DataFrame:
@@ -90,19 +90,19 @@ def get_datasource_2() -> pd.DataFrame:
         "Periods eq '2017JJ00')"
     )
 
-    df2 = fetch_data_with_retry('84985ENG', filters=filter_condition)
+    df = fetch_data_with_retry('84985ENG', filters=filter_condition)
 
-    if df2.empty:
+    if df.empty:
         print("Failed to fetch R&D Expenditure data "
               "after multiple attempts.")
     else:
-        df2 = df2.drop(columns=['ID',
+        df = df.drop(columns=['ID',
                                 'SectorBranchesSIC2008',
                                 'YearsOfWork_2',
                                 'EnterprisesWithInHouseRDActivities_4',
                                 'CompanySize'])
-        df2.columns = ['Year', 'Total R&D Employees', 'Total R&D Expenditure']
-    return df2
+        df.columns = ['Year', 'Total R&D Employees', 'Total R&D Expenditure']
+    return df
 
 
 def store_dataframe(df: pd.DataFrame, table: str, db_path: str):
