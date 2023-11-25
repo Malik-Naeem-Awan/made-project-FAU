@@ -58,33 +58,44 @@ def test_datapipeline():
 
     pipe.main()
 
-    assert os.path.exists(db_path_employees), f"Database file '{db_path_employees}' does not exist."
-    print(f"Database file '{db_path_employees}' exists. Test Passed.")
+    assert os.path.exists(db_path_employees), f"Database file " \
+                                              f"'{db_path_employees}' does not exist."
+    print(f"Database file '{db_path_employees}' "
+          f"exists. Test Passed.")
 
-    assert os.path.exists(db_path_rd_expenditure), f"Database file '{db_path_rd_expenditure}' does not exist."
-    print(f"Database file '{db_path_rd_expenditure}' exists. Test Passed.")
+    assert os.path.exists(db_path_rd_expenditure), f"Database file " \
+                                                   f"'{db_path_rd_expenditure}' does not exist."
+    print(f"Database file '{db_path_rd_expenditure}' "
+          f"exists. Test Passed.")
 
     engine = create_engine(f"sqlite:///{db_path_employees}")
     inspector = inspect(engine)
     tables = inspector.get_table_names()
 
-    assert len(tables) == 1, f"Expected 1 table in employees database, found {len(tables)}."
-    print(f"Number of tables in employees database: {len(tables)}. Test Passed.")
+    assert len(tables) == 1, f"Expected 1 table in " \
+                             f"employees database, found {len(tables)}."
+    print(f"Number of tables "
+          f"in employees database: {len(tables)}. Test Passed.")
 
-    assert "employees" in tables, "Employees table not found in employees database."
-    print("Employees table found in employees database. Test Passed.")
+    assert "employees" in tables, "Employees table not found " \
+                                  "in employees database."
+    print("Employees table found in "
+          "employees database. Test Passed.")
 
     engine = create_engine(f"sqlite:///{db_path_rd_expenditure}")
     inspector = inspect(engine)
     tables = inspector.get_table_names()
 
-    assert len(tables) == 1, f"Expected 1 table in R&D Expenditure database, found {len(tables)}."
-    print(f"Number of tables in R&D Expenditure database: {len(tables)}. Test Passed.")
+    assert len(tables) == 1, f"Expected 1 table in " \
+                             f"R&D Expenditure database, found {len(tables)}."
+    print(f"Number of tables in R&D "
+          f"Expenditure database: {len(tables)}. Test Passed.")
 
-    assert "R&D_Expenditure" in tables, "R&D_Expenditure table not found in R&D Expenditure database."
-    print("R&D_Expenditure table found in R&D Expenditure database. Test Passed.")
+    assert "R&D_Expenditure" in tables, "R&D_Expenditure table not " \
+                                        "found in R&D Expenditure database."
+    print("R&D_Expenditure table found "
+          "in R&D Expenditure database. Test Passed.")
 
 
 if __name__ == "__main__":
     pytest.main([__file__])
-    
