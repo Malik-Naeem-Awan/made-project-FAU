@@ -17,8 +17,25 @@ def fetch_data_with_retry(table, filters, max_attempts=5):
         try:
             data = pd.DataFrame(cbsodata.get_data(table, filters=filters))
             return data
+        except cbsodata.CBSodataException as cbs_error:
+            attempts += 1
+            # Handle CBSodataException (exceptions related to CBSOdata module)
+            print(f"Error fetching data from CBSOdata: {cbs_error}")
+            print(f"Attempt {attempts} failed. Error: {e}")
+            time.sleep(1)
+
+        except pd.errors.EmptyDataError as empty_data_error:
+            attempts += 1
+            # Handle EmptyDataError (exceptions related to empty DataFrame)
+            print(f"Empty DataFrame error: {empty_data_error}")
+            print(f"Attempt {attempts} failed. Error: {e}")
+            time.sleep(1)
+
         except Exception as e:
             attempts += 1
+            # Catch other exceptions
+            print(f"An unexpected error occurred: {e}")
+            # Optionally, log the error or perform additional error handling
             print(f"Attempt {attempts} failed. Error: {e}")
             time.sleep(1)
     return pd.DataFrame()
@@ -52,20 +69,20 @@ def get_datasource_1() -> pd.DataFrame:
         "Periods eq '2017JJ00')"
     )
 
-    df = fetch_data_with_retry('84060ENG', filters=filter_condition)
+    df_fetched = fetch_data_with_retry('84060ENG', filters=filter_condition)
 
-    if df.empty:
+    if df_fetched.empty:
         print("Failed to fetch data after multiple attempts.")
-    else:
-        df = df.drop(columns=['ID',
-                                'SectorBranchesSIC2008',
-                                'JobCharacteristics',
-                                'EmployeeWithWithoutRegistration',
-                                'MigrationBackgroundNationality',
-                                'EmployeeCharacteristics'])
-        df.columns = ['Year', 'Number of employees from abroad']
-        df['Number of employees from abroad'] = df['Number of employees from abroad'] * 1000
-    return df
+        return pd.DataFrame()  # Return an empty DataFrame on failure
+
+    df_processed = df_fetched.drop(columns=['ID',
+                                            'SectorBranchesSIC2008',
+                                            # ... other columns to drop
+                                            ])
+    df_processed.columns = ['Year', 'Number of employees from abroad']
+    df_processed['Number of employees from abroad'] *= 1000
+
+    return df_processed
 
 
 def get_datasource_2() -> pd.DataFrame:
