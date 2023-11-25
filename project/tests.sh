@@ -5,8 +5,8 @@ pytest test_datapipeline.py
 # Execute the data pipeline
 python3 pipeLine.py
 
-db_file_employees = './main/data/employees_data.sqlite'
-db_file_rd_expenditure = './main/data/R&D_Expenditure.sqlite'
+db_file_employees = './data/employees_data.sqlite'
+db_file_rd_expenditure = './data/R&D_Expenditure.sqlite'
 
 # Check if the output file exists
 if [ -f "$db_file_employees" ]; then
