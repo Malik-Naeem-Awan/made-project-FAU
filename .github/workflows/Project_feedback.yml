@@ -50,3 +50,5 @@ jobs:
             - name: Pipeline Feedback
               run: |
                chmod u+r+x ./project/tests.sh
+               cd ./project
+               ./tests.sh
