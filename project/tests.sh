@@ -1,9 +1,9 @@
 #!/bin/bash
 
-pytest ../project/test_datapipeline.py   
+pytest ./test_datapipeline.py   
 
 # Execute the data pipeline
-python3 ../project/pipeLine.py
+python3 ./pipeLine.py
 
 db_file_employees = '../data/employees_data.sqlite'
 db_file_rd_expenditure = '../data/R&D_Expenditure.sqlite'
