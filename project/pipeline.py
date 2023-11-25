@@ -1,7 +1,7 @@
 import sqlite3
+import time
 import pandas as pd
 import cbsodata
-import time
 
 def fetch_data_with_retry(table, filters, max_attempts=5):
     attempts = 0
@@ -84,3 +84,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
