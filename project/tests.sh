@@ -1,12 +1,12 @@
 #!/bin/bash
 
-pytest /home/runner/work/made-project-FAU/main/project/pipeLine.py  
+pytest ./main/project/test_pipeline.py   
 
 # Execute the data pipeline
-python3 /home/runner/work/made-project-FAU/main/project/pipeLine.py
+python3 ./main/project/pipeline.py
 
-db_file_employees = '/home/runner/work/made-project-FAU/main/data/employees_data.sqlite'
-db_file_rd_expenditure = '/home/runner/work/made-project-FAU/main/data/R&D_Expenditure.sqlite'
+db_file_employees="./main/data/employees_data.sqlite"
+db_file_rd_expenditure="./main/data/R&D_Expenditure.sqlite"
 
 # Check if the output file exists
 if [ -f "$db_file_employees" ]; then
