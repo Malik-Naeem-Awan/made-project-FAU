@@ -60,11 +60,11 @@ def get_datasource_1() -> pd.DataFrame:
         print("Failed to fetch data after multiple attempts.")
     else:
         df_processed = df_fetched.drop(columns=['ID',
-                                'SectorBranchesSIC2008',
-                                'JobCharacteristics',
-                                'EmployeeWithWithoutRegistration',
-                                'MigrationBackgroundNationality',
-                                'EmployeeCharacteristics'])
+                                                'SectorBranchesSIC2008',
+                                                'JobCharacteristics',
+                                                'EmployeeWithWithoutRegistration',
+                                                'MigrationBackgroundNationality',
+                                                'EmployeeCharacteristics'])
         df_processed.columns = ['Year', 'Number of employees from abroad']
         df_processed['Number of employees from abroad'] = df_processed['Number of employees from abroad'] * 1000
     return df_processed
