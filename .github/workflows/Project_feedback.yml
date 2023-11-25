@@ -1,1 +1,54 @@
+name: Continuous Integration
 
+on:
+    push:
+        paths:
+            - data/**
+            - project/**
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Set up Python 3.11
+              uses: actions/setup-python@v4
+              with:
+                python-version: 3.11
+
+            - name: Install pylint
+              run: |
+                python -m pip install --upgrade pip
+                pip install pylint
+            
+            - name: Install dependencies
+              run: |
+                pip install -r ./project/requirements.txt
+
+            - name: Analysing the code with pylint
+              run: |
+                pylint $(git ls-files 'data/*.py' 'project/*.py') --good-names=df
+    
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            
+            - name: Set up Python 3.11
+              uses: actions/setup-python@v4
+              with:
+                python-version: 3.11
+            
+            - name: Install dependencies
+              run: |
+               python -m pip install --upgrade pip
+               pip install -r ./project/requirements.txt
+            
+            - name: Pipeline Feedback
+              run: |
+               chmod u+r+x ./main/project/tests.sh
+               cd ./main/project
+               ./tests.sh
