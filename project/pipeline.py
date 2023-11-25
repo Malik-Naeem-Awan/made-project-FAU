@@ -53,11 +53,11 @@ def get_datasource_1() -> pd.DataFrame:
         "or "
         "Periods eq '2017JJ00')"
     )
-
     df_fetched = fetch_data_with_retry('84060ENG', filters=filter_condition)
 
     if df_fetched.empty:
         print("Failed to fetch data after multiple attempts.")
+        df_processed = None
     else:
         df_processed = df_fetched.drop(columns=['ID',
                                                 'SectorBranchesSIC2008',
@@ -65,8 +65,9 @@ def get_datasource_1() -> pd.DataFrame:
                                                 'EmployeeWithWithoutRegistration',
                                                 'MigrationBackgroundNationality',
                                                 'EmployeeCharacteristics'])
-        df_processed.columns = ['Year', 'Number of employees from abroad']
-        df_processed['Number of employees from abroad'] = df_processed['Number of employees from abroad'] * 1000
+        if not df_processed.empty:
+            df_processed.columns = ['Year', 'Number of employees from abroad']
+            df_processed['Number of employees from abroad'] *= 1000
     return df_processed
 
 
