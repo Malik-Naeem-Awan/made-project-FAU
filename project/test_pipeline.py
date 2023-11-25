@@ -9,7 +9,6 @@ from sqlalchemy import create_engine, inspect
 import pipeline as pipe
 
 
-# First function is to test the datasources fetch functions
 @pytest.mark.dependency()
 def test_get_datasources():
     """ Tests the methods to load the datasources """
@@ -22,7 +21,6 @@ def test_get_datasources():
     print("Data source 2 is a Pandas DataFrame. Test Passed.")
 
 
-# Second function in order to test if the data is stored in sqlite database
 @pytest.mark.dependency()
 def test_store_dataframe():
     """ Tests the method to store a dataframe in a sqlite database """
@@ -47,7 +45,6 @@ def test_store_dataframe():
 
 
 # Only execute test for the complete datapipeline if the previous tests passed
-# Executes whole pipeline as a whole
 @pytest.mark.dependency(depends=["test_get_datasources", "test_store_dataframe"])
 def test_datapipeline():
     """
@@ -86,4 +83,8 @@ def test_datapipeline():
 
     assert "R&D_Expenditure" in tables, "R&D_Expenditure table not found in R&D Expenditure database."
     print("R&D_Expenditure table found in R&D Expenditure database. Test Passed.")
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
     

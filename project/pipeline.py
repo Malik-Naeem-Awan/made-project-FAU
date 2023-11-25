@@ -1,13 +1,13 @@
-# Pipeline for importing and storing data from online sources to sqlite databases.
-
 import sqlite3
-import time
 import pandas as pd
 import cbsodata
+import time
 
 
-# function to fetch data with retries and exception handling
 def fetch_data_with_retry(table, filters, max_attempts=5):
+    """
+    Fetches data from CBS Open Data API with retry mechanism.
+    """
     attempts = 0
     while attempts < max_attempts:
         try:
@@ -20,8 +20,10 @@ def fetch_data_with_retry(table, filters, max_attempts=5):
     return pd.DataFrame()
 
 
-# function to get first datasource of employees from abroad
 def get_datasource_1() -> pd.DataFrame:
+    """
+    Loads Datasource 1.
+    """
     print(" - Loading Datasource 1")
 
     filter_condition = (
@@ -34,20 +36,22 @@ def get_datasource_1() -> pd.DataFrame:
         "Periods eq '2017JJ00')"
     )
 
-    df = fetch_data_with_retry('84060ENG', filters=filter_condition)
+    df1 = fetch_data_with_retry('84060ENG', filters=filter_condition)
 
-    if df.empty:
+    if df1.empty:
         print("Failed to fetch data after multiple attempts.")
     else:
-        df = df.drop(columns=['ID', 'SectorBranchesSIC2008', 'JobCharacteristics', 'EmployeeWithWithoutRegistration',
+        df1 = df1.drop(columns=['ID', 'SectorBranchesSIC2008', 'JobCharacteristics', 'EmployeeWithWithoutRegistration',
                                 'MigrationBackgroundNationality', 'EmployeeCharacteristics'])
-        df.columns = ['Year', 'Number of employees from abroad']
-        df['Number of employees from abroad'] = df['Number of employees from abroad'] * 1000
-    return df
+        df1.columns = ['Year', 'Number of employees from abroad']
+        df1['Number of employees from abroad'] = df1['Number of employees from abroad'] * 1000
+    return df1
 
 
-# function to get second datasource of R&D expenditure
 def get_datasource_2() -> pd.DataFrame:
+    """
+    Loads Datasource 2.
+    """
     print(" - Loading Datasource 2")
 
     filter_condition = (
@@ -57,19 +61,21 @@ def get_datasource_2() -> pd.DataFrame:
         "Periods eq '2017JJ00')"
     )
 
-    df = fetch_data_with_retry('84985ENG', filters=filter_condition)
+    df2 = fetch_data_with_retry('84985ENG', filters=filter_condition)
 
-    if df.empty:
+    if df2.empty:
         print("Failed to fetch R&D Expenditure data after multiple attempts.")
     else:
-        df = df.drop(columns=['ID', 'SectorBranchesSIC2008', 'YearsOfWork_2', 'EnterprisesWithInHouseRDActivities_4',
+        df2 = df2.drop(columns=['ID', 'SectorBranchesSIC2008', 'YearsOfWork_2', 'EnterprisesWithInHouseRDActivities_4',
                                 'CompanySize'])
-        df.columns = ['Year', 'Total R&D Employees', 'Total R&D Expenditure']
-    return df
+        df2.columns = ['Year', 'Total R&D Employees', 'Total R&D Expenditure']
+    return df2
 
 
-# function to store dataframes or datasources into sqlite databases
 def store_dataframe(df: pd.DataFrame, table: str, db_path: str):
+    """
+    Stores DataFrame into SQLite database.
+    """
     print(f" - Storing Data into table '{table}' of database '{db_path}'")
     conn = sqlite3.connect(db_path)
     df.to_sql(table, conn, if_exists='replace', index=False)
@@ -77,8 +83,10 @@ def store_dataframe(df: pd.DataFrame, table: str, db_path: str):
     conn.close()
 
 
-# function that executes main pipeline
 def main():
+    """
+    Main function to fetch and store data.
+    """
     db_path_employees = '../data/employees_data.sqlite'
     db_path_rd_expenditure = '../data/R&D_Expenditure.sqlite'
 
@@ -90,8 +98,8 @@ def main():
     df2 = get_datasource_2()
     store_dataframe(df2, 'R&D_Expenditure', db_path_rd_expenditure)
 
-
-# function to call main pipeline execution function
 if __name__ == "__main__":
+    """
+    Main function to call main pipeline executor function.
+    """
     main()
-    
