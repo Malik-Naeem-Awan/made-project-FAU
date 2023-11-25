@@ -67,7 +67,8 @@ def get_datasource_1() -> pd.DataFrame:
                                                 'EmployeeCharacteristics'])
         if not df_processed.empty:
             df_processed.columns = ['Year', 'Number of employees from abroad']
-            df_processed['Number of employees from abroad'] *= 1000
+            if 'Number of employees from abroad' in df_processed.columns:
+                df_processed['Number of employees from abroad'] *= 1000
     return df_processed
 
 
