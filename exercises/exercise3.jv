@@ -1,0 +1,121 @@
+pipeline CarsDataPipeline {
+
+    //all columns should be positive integers > 0
+    constraint NumberGreaterThenZero oftype RangeConstraint {
+        lowerBound: 0;
+        lowerBoundInclusive: false;
+    }
+
+    valuetype IntegerGreaterThenZero oftype integer {
+        constraints: [NumberGreaterThenZero];
+    }
+
+    //CINs are Community Identification Numbers, must be strings with 5 characters and can have a leading 0
+    constraint MinMaxFiveChar oftype LengthConstraint {
+        minLength: 5;
+        maxLength: 5;
+    }
+
+    valuetype CINs oftype text {
+        constraints: [MinMaxFiveChar];
+    }
+
+    // Extract csv from http
+    block CarsDataFileExtractor oftype HttpExtractor {
+        url: "https://www-genesis.destatis.de/genesis/downloads/00/tables/46251-0021_00.csv";
+    }
+
+    // Interpret the text file and Make sure to preserve the german special letters like “ü” or “ä”
+    block CarsDataTextFileInterpreter oftype TextFileInterpreter {
+        encoding: "latin6";
+    }
+
+    // Ignore the first 6 lines and last 4 lines as metadata
+    block CarsDataTextRangeSelector oftype TextRangeSelector {
+        lineFrom: 7;
+        lineTo: 483;
+    }
+
+    // csv interpreter
+    block CarsDataCSVInterpreter oftype CSVInterpreter {
+        delimiter: ";";
+    }
+
+    // rename columna to the new name given in assignment (M-BU contain summary data)
+    block Header_ColA_to_C oftype CellWriter {
+        at: range A1:C1;
+        write: ["date", "CIN", "name"];
+    }
+
+    block Header_ColM oftype CellWriter {
+        at: cell M1;
+        write: ["petrol"];
+    }
+
+    block Header_ColW oftype CellWriter {
+        at: cell W1;
+        write: ["diesel"];
+    }
+
+    block Header_ColAG oftype CellWriter {
+        at: cell AG1;
+        write: ["gas"];
+    }
+
+    block Header_ColAQ oftype CellWriter {
+        at: cell AQ1;
+        write: ["electro"];
+    }
+
+    block Header_ColBA oftype CellWriter {
+        at: cell BA1;
+        write: ["hybrid"];
+    }
+
+    block Header_ColBK oftype CellWriter {
+        at: cell BK1;
+        write: ["plugInHybrid"];
+    }
+
+    block Header_ColBU oftype CellWriter {
+        at: cell BU1;
+        write: ["others"];
+    }
+
+    block CarsDataTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "date" oftype text,
+            "CIN" oftype CINs,
+            "name" oftype text, 
+            "petrol" oftype IntegerGreaterThenZero,
+            "diesel" oftype IntegerGreaterThenZero,
+            "gas" oftype IntegerGreaterThenZero,
+            "electro" oftype IntegerGreaterThenZero,
+            "hybrid" oftype IntegerGreaterThenZero,
+            "plugInHybrid" oftype IntegerGreaterThenZero,
+            "others" oftype IntegerGreaterThenZero
+        ];
+    }
+
+    block CarsDataLoader oftype SQLiteLoader {
+        table: "cars";
+        file: "./cars.sqlite";
+    }
+
+    
+    CarsDataFileExtractor
+        ->CarsDataTextFileInterpreter
+        ->CarsDataTextRangeSelector
+        ->CarsDataCSVInterpreter
+        ->Header_ColA_to_C
+        ->Header_ColM
+        ->Header_ColW
+        ->Header_ColAG
+        ->Header_ColAQ
+        ->Header_ColBA
+        ->Header_ColBK
+        ->Header_ColBU
+        ->CarsDataTableInterpreter
+        ->CarsDataLoader;
+}
