@@ -1,7 +1,12 @@
 pandas
 numpy
+time
+geopandas
 pytest
+plotly
 pytest-dependency
+nbformat
 openpyxl
+matplotlib
 SQLAlchemy==1.4.46
 cbsodata
