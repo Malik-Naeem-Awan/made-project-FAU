@@ -7,8 +7,7 @@ The task was to build a Data Engineering Project, which takes at least two publi
 ![Employment trends](https://ec.europa.eu/eurostat/documents/4187653/10321624/RD_intensity_2019data_Kreslic%C3%AD+pl%C3%A1tno+1.jpg/eab014e5-dafc-1bb6-33c3-3b1ab5a5a5c9?t=1606313161665)
 -->
 <p align="center">
-  <img src="https://mrcollege.ac.uk/wp-content/uploads/2021/10/Employment-Trends-600x247.jpg" width="48%" height="150px">
-  <img src="https://ec.europa.eu/eurostat/documents/4187653/10321624/RD_intensity_2019data_Kreslic%C3%AD+pl%C3%A1tno+1.jpg/eab014e5-dafc-1bb6-33c3-3b1ab5a5a5c9?t=1606313161665" width="48%" height="150px">
+  <img src="https://mrcollege.ac.uk/wp-content/uploads/2021/10/Employment-Trends-600x247.jpg" width="100%" height="100%">
 </p>
 <div style="text-align: center;">
 
@@ -24,8 +23,8 @@ The task was to build a Data Engineering Project, which takes at least two publi
 The aim of this project is to investigate if there is a relationship between the R&D Expenditure and employees working in the Netherland who are from abroad. Therefore it uses open available datasources provided by
  <br>
 
-[<img src="https://opendata.cbs.nl/statline/Content/image/cbs.svg?style=flat&logo=CBS&logoColor=white" width="100" height="100">](https://opendata.cbs.nl/statline/#/CBS/en/)
-[<img src="https://data.europa.eu/themes/edp3/dist/ecl/preset-eu/dist/images/logo/standard-version/positive/logo-eu--en.svg?style=flat&logo=EU&logoColor=white" width="250" height="100">](https://data.europa.eu/en)
+[<img src="https://opendata.cbs.nl/statline/Content/image/cbs.svg?style=flat&logo=CBS&logoColor=white" width="100" height="70">](https://opendata.cbs.nl/statline/#/CBS/en/)
+[<img src="https://data.europa.eu/themes/edp3/dist/ecl/preset-eu/dist/images/logo/standard-version/positive/logo-eu--en.svg?style=flat&logo=EU&logoColor=white" width="250" height="70">](https://data.europa.eu/en)
  <br>
 
 For details see the [project plan](https://github.com/Malik-Naeem-Awan/made-project-FAU/blob/main/project/project-plan.md).
