@@ -93,4 +93,4 @@ During the semester we had to complete exercises, sometimes using [Python](https
 4. [exercises/exercise4.py](exercises/exercise4.py)
 5. [exercises/exercise5.jv](exercises/exercise5.jv)
 
-The exercise feedback is executed whenever we make a change in files in the `exercise/` directory and push our local changes to the repository on GitHub. To see the feedback, open the latest GitHub Action run, and open the `exercise-feedback` job and `Exercise Feedback` step.
+The exercise feedback is executed whenever we make a change in files in the `exercise/` directory and push our local changes to the repository on GitHub. To see the feedback, open the latest GitHub Action run, and open the `exercise-feedback` job and `Exercise Feedback` steps executed.
