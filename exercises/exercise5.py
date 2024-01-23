@@ -29,7 +29,7 @@ with open('GTFS/stops.txt', 'r', encoding='utf-8-sig') as csv_file:
         ):
             filtered_and_validated_data.append({
                 'stop_id': data_row['stop_id'],
-                'name_of_stop': data_row['stop_name'],
+                'stop_name': data_row['stop_name'],
                 'stop_lat': float(data_row['stop_lat']),
                 'stop_lon': float(data_row['stop_lon']),
                 'zone_id': int(data_row['zone_id'])
@@ -43,7 +43,7 @@ filtered_and_validated_dataframe = pd.DataFrame(filtered_and_validated_data)
 # Define SQLite types for each column
 sqlite_data_types = {
     'stop_id': Integer(),
-    'name_of_stop': Text(),
+    'stop_name': Text(),
     'stop_lat': Float(),
     'stop_lon': Float(),
     'zone_id': Integer()
