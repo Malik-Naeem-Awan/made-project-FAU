@@ -41,7 +41,7 @@ pipeline StopsDataPipeline {
 
     // stops text data interpretor for German umlauts 
     block StopsTextDataFileInterpreter oftype TextFileInterpreter {
-        encoding: "latin6";
+        encoding: "utf8";
     }
 
     // stops csv data interpretor
