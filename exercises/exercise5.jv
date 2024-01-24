@@ -1,0 +1,78 @@
+pipeline StopsDataPipeline {
+
+    // Grographical coordinates validation constraint
+    constraint GeographicCoordinatesValidation oftype RangeConstraint {
+        lowerBound: -90;
+        lowerBoundInclusive: true;
+        upperBound: 90;
+        upperBoundInclusive: true;
+    }
+
+    valuetype GeographicCoordianteValue oftype decimal {
+        constraints: [GeographicCoordinatesValidation];
+    }
+
+    // Filter the stops for only zone 2001 constraint
+    constraint FilterZone2001 oftype RangeConstraint {
+        lowerBound: 2001;
+        lowerBoundInclusive: true;
+        upperBound: 2001;
+        upperBoundInclusive: true;
+    }
+
+    valuetype FilteredZone2001 oftype integer {
+        constraints: [FilterZone2001];
+    }
+
+    // Zip file extractor from HTTP URL
+    block GTFSZipFileExtractor oftype HttpExtractor {
+        url: "https://gtfs.rhoenenergie-bus.de/GTFS.zip";
+    }
+
+    // Zip Archive file Interpretor
+    block ZipArchiveFileInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    //Stops data picker from a file
+    block StopsDataFilePicker oftype FilePicker {
+        path: "/stops.txt";
+    }
+
+    // stops text data interpretor for German umlauts 
+    block StopsTextDataFileInterpreter oftype TextFileInterpreter {
+        encoding: "latin6";
+    }
+
+    // stops csv data interpretor
+    block StopsCSVDataInterpreter oftype CSVInterpreter {
+        delimiter: ",";
+        enclosing: '"';
+    }
+
+    // stops table data interpretor
+    block StopsTableDataInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "stop_id" oftype integer,
+            "stop_name" oftype text,
+            "stop_lat" oftype GeographicCoordianteValue,
+            "stop_lon" oftype GeographicCoordianteValue,
+            "zone_id" oftype FilteredZone2001,
+        ];
+    }
+
+    // stops data loader into SQLite
+    block StopsDataSQLiteLoader oftype SQLiteLoader {
+        table: "stops";
+        file: "./gtfs.sqlite";
+    }
+
+    GTFSZipFileExtractor
+        -> ZipArchiveFileInterpreter
+        -> StopsDataFilePicker
+        -> StopsTextDataFileInterpreter
+        -> StopsCSVDataInterpreter
+        -> StopsTableDataInterpreter
+        -> StopsDataSQLiteLoader;
+}
